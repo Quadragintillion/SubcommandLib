@@ -9,7 +9,7 @@ import xyz.dragin.subcommandlib.api.options.CommandOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabUtils {
+public final class TabUtils {
     private TabUtils() {}
 
     /**
