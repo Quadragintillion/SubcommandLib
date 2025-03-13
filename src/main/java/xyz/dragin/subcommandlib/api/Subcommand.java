@@ -63,7 +63,7 @@ public interface Subcommand extends CommandExecutor, TabCompleter {
         if (args.length > 0
                 && SubcommandUtils.contains(this, args[0])) {
             return SubcommandUtils.findSubcommandByName(this, args[0])
-                    .onCommand(sender, command, label, args);
+                    .onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
         }
         return execute(sender, TabUtils.parseFlags(List.of(args), getAllowedFlags(sender)));
     }
@@ -79,9 +79,9 @@ public interface Subcommand extends CommandExecutor, TabCompleter {
 
         // Passes to a nested subcommand if needed
         if (!getSubcommands().isEmpty()
-                && args.length > 0
-                && SubcommandUtils.contains(this, args[0])) {
-            return SubcommandUtils.findSubcommandByName(this, args[0])
+                && !previouslySupplied.isEmpty()
+                && SubcommandUtils.contains(this, previouslySupplied.getFirst())) {
+            return SubcommandUtils.findSubcommandByName(this, previouslySupplied.getFirst())
                     .onTabComplete(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
         }
 
@@ -99,12 +99,12 @@ public interface Subcommand extends CommandExecutor, TabCompleter {
             output = option.getSuggestedOptions();
         } else {
             // Adds everything to the output
-            List<String> actualTabCompletion = tabComplete(sender, arguments, args.length > 0 ? args[args.length-1] : "");
+            List<String> actualTabCompletion = tabComplete(sender, arguments, !previouslySupplied.isEmpty() ? previouslySupplied.getLast() : "");
             List<CommandFlag> suggestedFlags = suggestFlags(sender, arguments);
             output.addAll(actualTabCompletion);
             output.addAll(suggestedFlags.stream().map(CommandFlag::toString).toList());
         }
 
-        return TabUtils.narrow(output, args.length > 0 ? args[args.length-1] : "");
+        return TabUtils.narrow(output, !previouslySupplied.isEmpty() ? args[args.length-1] : "");
     }
 }
