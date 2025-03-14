@@ -105,6 +105,6 @@ public interface Subcommand extends CommandExecutor, TabCompleter {
             output.addAll(suggestedFlags.stream().map(CommandFlag::toString).toList());
         }
 
-        return TabUtils.narrow(output, !previouslySupplied.isEmpty() ? args[args.length-1] : "");
+        return TabUtils.narrow(output, args.length > 0 ? args[args.length-1] : "");
     }
 }
