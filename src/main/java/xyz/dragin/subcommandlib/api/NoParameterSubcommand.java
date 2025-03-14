@@ -7,6 +7,9 @@ import xyz.dragin.subcommandlib.api.options.CommandFlag;
 
 import java.util.List;
 
+/**
+ * A Subcommand that takes in no parameters at all, neither flags nor normal arguments
+ */
 public interface NoParameterSubcommand extends NoFlagSubcommand {
     @Override
     default @NotNull List<String> tabComplete(@NotNull CommandSender commandSender, @NotNull List<Either<String, CommandFlag>> list, String s) {

@@ -9,10 +9,16 @@ import xyz.dragin.subcommandlib.api.options.CommandOption;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class for tab completion
+ */
 public final class TabUtils {
     private TabUtils() {}
 
     /**
+     * Checks for valid flags in a command
+     * @param arguments The arguments passed to the command to parse
+     * @param allowedFlags The List of flags to consider when parsing, otherwise everything is interpreted as normal arguments
      * @return A List of Objects, each either a String or CommandFlag, that have been supplied
      */
     public static List<Either<String, CommandFlag>> parseFlags(@NotNull List<String> arguments, @NotNull List<CommandFlag> allowedFlags) {

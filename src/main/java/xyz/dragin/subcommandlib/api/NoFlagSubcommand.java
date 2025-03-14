@@ -7,6 +7,9 @@ import xyz.dragin.subcommandlib.api.options.CommandFlag;
 
 import java.util.List;
 
+/**
+ * A Subcommand without any flags
+ */
 public interface NoFlagSubcommand extends Subcommand {
     @Override
     default @NotNull List<CommandFlag> getAllowedFlags(@NotNull CommandSender commandSender) {

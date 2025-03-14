@@ -13,20 +13,27 @@ import xyz.dragin.subcommandlib.util.TabUtils;
 
 import java.util.*;
 
+/**
+ * A command or subcommand. Can have any amount of Subcommand children.
+ */
 public interface Subcommand extends CommandExecutor, TabCompleter {
     /**
-     * @return The name of the command for registry and identification
+     * The all-lowercase name of the command for registry and identification; what's typed by the player
+     * @return The name of the command
      */
     @NotNull String getName();
 
     /**
-     * @return A list of Subcommands that are children to this one
+     * A list of Subcommands that are children to this one
+     * @return All child Subcommands
      */
     @NotNull List<Subcommand> getSubcommands();
 
     /**
+     * What should be done when the command is executed
      * @param sender The CommandSender running the command
      * @param arguments All String (required) or CommandFlag (optional) arguments passed to the command
+     * @return Usually true, if false will send the usage specified in plugin.yml to the player
      */
     boolean execute(@NotNull CommandSender sender, @NotNull List<Either<String, CommandFlag>> arguments);
 
@@ -36,26 +43,28 @@ public interface Subcommand extends CommandExecutor, TabCompleter {
      * Note: You won't need to filter based on what's typed; that's handled automatically
      * @param sender The CommandSender typing the command
      * @param arguments All String (required) and CommandFlag (optional) arguments currently entered into the command
+     * @param typed The final incomplete argument to tab complete
      * @return A list of tab suggestions based on previous arguments
      */
     @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull List<Either<String, CommandFlag>> arguments, String typed);
 
     /**
+     * CommandFlags that can be used and will be treated as flags (all other strings are literal)
      * @param sender The CommandSender typing the command
-     * @return A list of CommandFlags that can be used and will be treated as flags (all other strings are literal)
+     * @return List of valid CommandFlags
      */
     @NotNull List<CommandFlag> getAllowedFlags(@NotNull CommandSender sender);
 
     /**
+     * A list of flags that are suggested in the tab completion based on the current entry - usually just a call to getAllowedFlags()
      * @param sender The CommandSender typing the command
      * @param arguments All String (required) and CommandFlag (optional) arguments currently entered into the command
-     * @return A list of flags that are suggested based on the current entry - usually just a call to getAllowedFlags()
+     * @return List of flags to suggest in the tab completion
      */
     @NotNull List<CommandFlag> suggestFlags(@NotNull CommandSender sender, @NotNull List<Either<String, CommandFlag>> arguments);
 
     /**
-     * Lower-level CommandExecutor function
-     * Generally, do not override
+     * Lower-level CommandExecutor function. Generally, you should not override this.
      */
     @Override
     default boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
@@ -69,8 +78,7 @@ public interface Subcommand extends CommandExecutor, TabCompleter {
     }
 
     /**
-     * Lower-level TabCompleter function
-     * Generally, do not override
+     * Lower-level TabCompleter function. Generally, you should not override this.
      */
     @Override
     default List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {

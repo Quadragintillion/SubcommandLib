@@ -8,11 +8,13 @@ public class CommandFlag implements Cloneable {
     private final String flag;
 
     /**
+     * Gets the name of the flag, not including any dashes
      * @return The name of the flag, not including any dashes
      */
     public String getFlag() { return flag; }
 
     /**
+     * Initialization constructor
      * @param flag The name of the flag, not including any dashes
      */
     public CommandFlag(String flag) {
@@ -20,6 +22,7 @@ public class CommandFlag implements Cloneable {
     }
 
     /**
+     * Gets the flag as a String to be used in the tab completion menu and for general human readability
      * @return The flag name including dashes
      */
     public String toString() {
