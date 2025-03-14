@@ -3,6 +3,7 @@ package xyz.dragin.subcommandlib.options;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,8 @@ public abstract class CommandOption extends CommandFlag {
     public CommandOption(String flag) {
         this(flag, null);
     }
+
+    public List<Character> getSuggestedNext(List<CommandFlag> previous) { return List.of(); }
 
     /**
      * Initialization constructor with an option, for when an option has been passed

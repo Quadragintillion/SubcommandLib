@@ -121,8 +121,40 @@ public abstract class Subcommand implements CommandExecutor, TabCompleter {
             // Adds everything to the output
             List<String> actualTabCompletion = tabComplete(sender, arguments, !previouslySupplied.isEmpty() ? previouslySupplied.getLast() : "");
             List<CommandFlag> suggestedFlags = suggestFlags(sender, arguments);
+            List<String> additionalFlags = new ArrayList<>();
+            if (args.length != 0) {
+                // Get the current flag sequence to build upon
+                List<CommandFlag> context = TabUtils.parseFlags(List.of(args[args.length - 1]), getAllowedFlags(sender))
+                        .stream()
+                        .filter(Either::isRight)
+                        .map(Either::get)
+                        .toList();
+                if (!context.isEmpty() && context.getLast().getFlag().length() == 1) {
+                    // Add any suggested single-digit flags
+                    additionalFlags.addAll(
+                            context.getLast().getSuggestedNext(context)
+                                    .stream()
+                                    .filter(character ->
+                                            getAllowedFlags(sender)
+                                                    .stream()
+                                                    .filter(flag -> flag.getFlag().length() == 1)
+                                                    .map(flag -> flag.getFlag().charAt(0))
+                                                    .toList()
+                                                    .contains(character)
+                                    )
+                                    .map(character -> "-" + String.join("", context
+                                            .stream()
+                                            .map(CommandFlag::getFlag)
+                                            .toList()
+                                    ) + character)
+                                    .toList()
+                    );
+                    // I'm gonna look at this code in a year and have no clue what I was thinking with all this stream shit
+                }
+            }
             output.addAll(actualTabCompletion);
             output.addAll(suggestedFlags.stream().map(CommandFlag::toString).toList());
+            output.addAll(additionalFlags);
         }
 
         return TabUtils.narrow(output, args.length > 0 ? args[args.length-1] : "");

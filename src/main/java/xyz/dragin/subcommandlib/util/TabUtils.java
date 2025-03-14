@@ -8,6 +8,7 @@ import xyz.dragin.subcommandlib.options.CommandOption;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for tab completion
@@ -30,17 +31,29 @@ public final class TabUtils {
                 output.add(Either.right(nextOption));
                 nextOption = null;
             } else {
-                CommandFlag flag = null;
-                for (CommandFlag allowedFlag : allowedFlags) {
-                    if (arg.equals(allowedFlag.toString())) {
-                        flag = allowedFlag;
-                        break;
+                List<CommandFlag> flags = new ArrayList<>();
+
+                if (arg.startsWith("--")) {
+                    for (CommandFlag allowedFlag : allowedFlags) {
+                        if (allowedFlag.toString().equals(arg)) flags = List.of(allowedFlag);
+                    }
+                } else if (arg.startsWith("-")) {
+                    for (char c : arg.substring(1).toCharArray()) {
+                        CommandFlag matchingFlag = null;
+                        for (CommandFlag allowedFlag : allowedFlags) {
+                            if (allowedFlag.getFlag().equals("" + c)) matchingFlag = allowedFlag;
+                        }
+                        if (matchingFlag == null) {
+                            flags = List.of();
+                            break;
+                        } else flags.add(matchingFlag);
                     }
                 }
-                if (flag == null) output.add(Either.left(arg));
-                else if (flag instanceof CommandOption option) {
+
+                if (flags.isEmpty()) output.add(Either.left(arg));
+                else if (flags.size() == 1 && flags.getFirst() instanceof CommandOption option) {
                     nextOption = option.clone();
-                } else output.add(Either.right(flag));
+                } else output.addAll(flags.stream().map(Either::<String, CommandFlag>right).toList());
             }
         }
         if (nextOption != null) output.add(Either.right(nextOption));

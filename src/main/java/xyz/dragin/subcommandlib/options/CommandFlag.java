@@ -1,10 +1,12 @@
 package xyz.dragin.subcommandlib.options;
 
+import java.util.List;
+
 /**
  * Represents an optional command flag (e.g. -f) with no parameters
  * @see CommandOption
  */
-public class CommandFlag implements Cloneable {
+public abstract class CommandFlag implements Cloneable {
     private final String flag;
 
     /**
@@ -29,6 +31,13 @@ public class CommandFlag implements Cloneable {
         return (flag.length() > 1 ? "--" : "-") + getFlag();
     }
 
+    /**
+     * Gets any suggested flags that can be used in addition to this one (e.g. -zxvf)
+     * @param previous All previously supplied flags in the "cluster"
+     * @return List of single characters to suggest
+     */
+    public abstract List<Character> getSuggestedNext(List<CommandFlag> previous);
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof CommandFlag other) return flag.equals(other.flag);
@@ -42,5 +51,21 @@ public class CommandFlag implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    /**
+     * Convenience function for getting a CommandFlag for comparison
+     * or for CommandFlags (specifically with longer names) that can't be in a "cluster"
+     * without having to implement getSuggestedNext
+     * @param name The name of the flag without any dashes
+     * @return A CommandFlag for comparison purposes
+     */
+    public static CommandFlag simple(String name) {
+        return new CommandFlag(name) {
+            @Override
+            public List<Character> getSuggestedNext(List<CommandFlag> previous) {
+                return List.of();
+            }
+        };
     }
 }
