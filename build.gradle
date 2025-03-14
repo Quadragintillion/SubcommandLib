@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'xyz.dragin'
-version = '1.2.0'
+version = '1.2.1'
 
 repositories {
     mavenLocal()
@@ -25,17 +25,6 @@ dependencies {
     compileOnly "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'xyz.dragin'
-            artifactId = 'subcommandlib'
-            version = version
-
-            from components.java
-        }
-    }
-}
 
 def targetJavaVersion = 21
 java {
@@ -45,6 +34,9 @@ java {
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
+
+    withSourcesJar()
+    withJavadocJar()
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -52,5 +44,17 @@ tasks.withType(JavaCompile).configureEach {
 
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release.set(targetJavaVersion)
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'xyz.dragin'
+            artifactId = 'subcommandlib'
+            version = version
+
+            from components.java
+        }
     }
 }

@@ -17,11 +17,20 @@ import java.util.*;
  * A command or subcommand. Can have any amount of Subcommand children.
  */
 public abstract class Subcommand implements CommandExecutor, TabCompleter {
+    private final String name;
     /**
      * The all-lowercase name of the command for registry and identification; what's typed by the player
      * @return The name of the command
      */
-    @NotNull public abstract String getName();
+    @NotNull public String getName() { return name; }
+
+    /**
+     * Initialization constructor
+     * @param name The all-lowercase name of the Subcommand for registry and identification; what's typed by the player
+     */
+    public Subcommand(String name) {
+        this.name = name;
+    }
 
     /**
      * A list of Subcommands that are children to this one
