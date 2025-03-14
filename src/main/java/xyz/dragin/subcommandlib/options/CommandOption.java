@@ -1,4 +1,4 @@
-package xyz.dragin.subcommandlib.api.options;
+package xyz.dragin.subcommandlib.options;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

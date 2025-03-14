@@ -3,7 +3,6 @@ package xyz.dragin.subcommandlib;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import xyz.dragin.subcommandlib.api.Subcommand;
 
 /**
  * Main class used for Subcommand registry

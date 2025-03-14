@@ -3,8 +3,8 @@ package xyz.dragin.subcommandlib.util;
 import io.vavr.control.Either;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import xyz.dragin.subcommandlib.api.options.CommandFlag;
-import xyz.dragin.subcommandlib.api.options.CommandOption;
+import xyz.dragin.subcommandlib.options.CommandFlag;
+import xyz.dragin.subcommandlib.options.CommandOption;
 
 import java.util.ArrayList;
 import java.util.List;

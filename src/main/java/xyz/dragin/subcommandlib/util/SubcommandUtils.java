@@ -1,6 +1,6 @@
 package xyz.dragin.subcommandlib.util;
 
-import xyz.dragin.subcommandlib.api.Subcommand;
+import xyz.dragin.subcommandlib.Subcommand;
 
 /**
  * Utility class for Subcommands

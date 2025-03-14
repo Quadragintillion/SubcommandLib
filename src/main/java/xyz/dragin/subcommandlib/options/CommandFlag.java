@@ -1,4 +1,4 @@
-package xyz.dragin.subcommandlib.api.options;
+package xyz.dragin.subcommandlib.options;
 
 /**
  * Represents an optional command flag (e.g. -f) with no parameters
