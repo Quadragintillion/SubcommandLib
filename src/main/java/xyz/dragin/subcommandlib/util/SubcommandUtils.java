@@ -1,6 +1,10 @@
 package xyz.dragin.subcommandlib.util;
 
+import io.vavr.control.Either;
 import xyz.dragin.subcommandlib.Subcommand;
+import xyz.dragin.subcommandlib.options.CommandFlag;
+
+import java.util.List;
 
 /**
  * Utility class for Subcommands
@@ -28,5 +32,23 @@ public final class SubcommandUtils {
         return parent.getSubcommands().stream().filter(
                 (subcommand) -> subcommand.getName().equals(childName)
         ).toList().getFirst();
+    }
+
+    /**
+     * Filters all normal arguments from a list of variable arguments
+     * @param arguments Variable argument types
+     * @return Only specified normal arguments
+     */
+    public static List<String> getNormalArguments(List<Either<String, CommandFlag>> arguments) {
+        return arguments.stream().filter(Either::isLeft).map(Either::getLeft).toList();
+    }
+
+    /**
+     * Filters all flags from a list of variable arguments
+     * @param arguments Variable argument types
+     * @return Only specified flags
+     */
+    public static List<CommandFlag> getFlags(List<Either<String, CommandFlag>> arguments) {
+        return arguments.stream().filter(Either::isRight).map(Either::get).toList();
     }
 }
