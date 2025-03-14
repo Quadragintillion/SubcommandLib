@@ -1,6 +1,7 @@
 package xyz.dragin.subcommandlib;
 
 import io.vavr.control.Either;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -42,7 +43,7 @@ public abstract class Subcommand implements CommandExecutor, TabCompleter {
      * What should be done when the command is executed
      * @param sender The CommandSender running the command
      * @param arguments All String (required) or CommandFlag (optional) arguments passed to the command
-     * @return Usually true, if false will send the usage specified in plugin.yml to the player
+     * @return False if and only if the command cannot be run by itself (parent to subcommands only)
      */
     public abstract boolean execute(@NotNull CommandSender sender, @NotNull List<Either<String, CommandFlag>> arguments);
 
@@ -82,7 +83,10 @@ public abstract class Subcommand implements CommandExecutor, TabCompleter {
             return SubcommandUtils.findSubcommandByName(this, args[0])
                     .onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
         }
-        return execute(sender, TabUtils.parseFlags(List.of(args), getAllowedFlags(sender)));
+        // False if it cannot be run by itself
+        if (!execute(sender, TabUtils.parseFlags(List.of(args), getAllowedFlags(sender))))
+            sender.sendMessage(ChatColor.RED + "This command cannot be run by itself.");
+        return true;
     }
 
     /**
