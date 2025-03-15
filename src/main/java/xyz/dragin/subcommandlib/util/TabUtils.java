@@ -8,7 +8,6 @@ import xyz.dragin.subcommandlib.options.CommandOption;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Utility class for tab completion
