@@ -51,4 +51,18 @@ public final class SubcommandUtils {
     public static List<CommandFlag> getFlags(List<Either<String, CommandFlag>> arguments) {
         return arguments.stream().filter(Either::isRight).map(Either::get).toList();
     }
+
+    /**
+     * Finds a flag by a simple comparison instance
+     * @param simple The instance for comparison
+     * @param arguments Arguments to search through
+     * @return The found CommandFlag or null
+     */
+    public static CommandFlag findFromSimple(CommandFlag simple, List<CommandFlag> arguments) {
+        return arguments
+                .stream()
+                .filter(flag -> flag.equals(simple))
+                .toList()
+                .getFirst();
+    }
 }

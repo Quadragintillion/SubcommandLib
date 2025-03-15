@@ -38,8 +38,6 @@ public abstract class CommandOption extends CommandFlag {
         this(flag, null);
     }
 
-    public List<Character> getSuggestedNext(List<CommandFlag> previous) { return List.of(); }
-
     /**
      * Initialization constructor with an option, for when an option has been passed
      * @param flag The name of the flag without any dashes
@@ -50,8 +48,25 @@ public abstract class CommandOption extends CommandFlag {
         this.option = option;
     }
 
+    public final List<Character> getSuggestedNext(List<CommandFlag> previous) { return List.of(); }
+
     @Override
     public CommandOption clone() {
         return (CommandOption) super.clone();
+    }
+
+    /**
+     * Convenience function for getting a CommandOption for comparison
+     * without having to implement getSuggestedOptions
+     * @param name The name of the flag without any dashes
+     * @return A CommandOption for comparison purposes
+     */
+    public static CommandOption simple(String name) {
+        return new CommandOption(name) {
+            @Override
+            public @NotNull List<String> getSuggestedOptions() {
+                return List.of();
+            }
+        };
     }
 }
