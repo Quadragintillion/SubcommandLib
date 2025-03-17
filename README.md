@@ -37,17 +37,17 @@ public class TestCommand implements Subcommand {
   @Override
   public @NotNull List<Subcommand> getSubcommands() {
     return List.of(
-        new TestSubcommand1(),
-        new TestSubcommand2(),
+        new ComplexSubcommand(), // A more complex subcommand (subcommand1)
+        new SimpleSubcommand(), // A more simple sumbcommand (subcommand2)
         new TestCommand() // An infinitely recursive subcommand, because why not
     );
   } // This command does not override execute(), so it cannot be executed.
 }
 ```
 
-### commands/test/TestSubcommand1.java
+### commands/test/ComplexSubcommand.java
 ```java
-public class TestSubcommand1 implements Subcommand {
+public class ComplexSubcommand implements Subcommand {
     @Override
     public @NotNull String getName() {
         return "subcommand1";
@@ -132,9 +132,9 @@ public class TestSubcommand1 implements Subcommand {
 }
 ```
 
-### commands/test/Subcommand2.java
+### commands/test/SimpleSubcommand.java
 ```java
-public class TestSubcommand2 implements Subcommand {
+public class SimpleSubcommand implements Subcommand {
     @Override
     public @NotNull String getName() {
         return "subcommand2";
