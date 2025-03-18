@@ -57,4 +57,20 @@ publishing {
             from components.java
         }
     }
+
+    repositories {
+        maven {
+            url = "https://repo.codemc.io/repository/quadragintillion/" //
+
+            def mavenUsername = System.getenv("JENKINS_USERNAME")
+            def mavenPassword = System.getenv("JENKINS_PASSWORD")
+
+            if (mavenUsername != null && mavenPassword != null) {
+                credentials {
+                    username = mavenUsername
+                    password = mavenPassword
+                }
+            }
+        }
+    }
 }
