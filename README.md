@@ -63,7 +63,7 @@ repositories {
 }
 
 dependencies {
-    implementation('xyz.dragin:subcommandlib:VERSION')
+    implementation("xyz.dragin:subcommandlib:VERSION")
 }
 ```
 </details>
