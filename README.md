@@ -10,7 +10,62 @@ SubcommandLib also has a powerful argument system. You can define CommandFlags, 
 
 ## Adding as a Dependency
 
-TBA - Waiting for approval from CodeMC
+The current verison of SubcommandLib is 1.3.1.
+SubcommandLib uses the Either class from Vavr.
+
+<details>
+<summary>Maven</summary>
+
+```xml
+<project>
+    <repositories>
+        <repository>
+            <id>codemc</id>
+            <url>https://repo.codemc.io/repository/quadragintillion/</url>
+        </repository>
+    </repositories>
+    
+    <dependencies>
+        <dependency>
+            <groupId>xyz.dragin</groupId>
+            <artifactId>subcommandlib</artifactId>
+            <version>VERSION</version>
+        </dependency>
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>0.10.6</version>
+        </dependency>
+    </dependencies>
+</project>
+```
+</details>
+<details>
+<summary>Gradle (Groovy)</summary>
+
+```gradle
+repositories {
+    maven { url 'https://repo.codemc.io/repository/quadragintillion/' }
+}
+
+dependencies {
+    implementation 'xyz.dragin:subcommandlib:VERSION'
+}
+```
+</details>
+<details>
+<summary>Gradle (Kotlin DSL)</summary>
+
+```kotlin
+repositories {
+    maven(url = "https://repo.codemc.io/repository/quadragintillion/")
+}
+
+dependencies {
+    implementation('xyz.dragin:subcommandlib:VERSION')
+}
+```
+</details>
 
 ## Example
 
