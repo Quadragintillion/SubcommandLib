@@ -11,6 +11,7 @@ SubcommandLib also has a powerful argument system. You can define CommandFlags, 
 ## Adding as a Dependency
 
 The current verison of SubcommandLib is 1.3.1.
+
 SubcommandLib uses the Either class from Vavr.
 
 <details>
