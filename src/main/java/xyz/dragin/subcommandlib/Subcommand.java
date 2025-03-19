@@ -24,7 +24,7 @@ public interface Subcommand {
      * @return All child Subcommands
      */
     @NotNull default List<Subcommand> getSubcommands() {
-        return List.of();
+        return Collections.emptyList();
     }
 
     /**
@@ -49,7 +49,7 @@ public interface Subcommand {
      * @return A list of tab suggestions based on previous arguments
      */
     @NotNull default List<String> tabComplete(@NotNull CommandSender sender, @NotNull List<Either<String, CommandFlag>> arguments, String typed) {
-        return List.of();
+        return Collections.emptyList();
     }
 
     /**
@@ -59,7 +59,7 @@ public interface Subcommand {
      * @return List of valid CommandFlags
      */
     @NotNull default List<CommandFlag> getAllowedFlags(@NotNull CommandSender sender) {
-        return List.of();
+        return Collections.emptyList();
     }
     /**
      * A list of flags that are suggested in the tab completion based on the current entry.

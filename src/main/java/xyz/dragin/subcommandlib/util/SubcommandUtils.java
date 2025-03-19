@@ -5,6 +5,7 @@ import xyz.dragin.subcommandlib.Subcommand;
 import xyz.dragin.subcommandlib.options.CommandFlag;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for Subcommands
@@ -19,7 +20,7 @@ public final class SubcommandUtils {
      * @return Whether the name exists as a child of the parent
      */
     public static boolean contains(Subcommand parent, String childName) {
-        return parent.getSubcommands().stream().map(Subcommand::getName).toList().contains(childName);
+        return parent.getSubcommands().stream().map(Subcommand::getName).collect(Collectors.toList()).contains(childName);
     }
 
     /**
@@ -31,7 +32,7 @@ public final class SubcommandUtils {
     public static Subcommand findSubcommandByName(Subcommand parent, String childName) {
         return parent.getSubcommands().stream().filter(
                 (subcommand) -> subcommand.getName().equals(childName)
-        ).toList().getFirst();
+        ).collect(Collectors.toList()).get(0);
     }
 
     /**
@@ -40,7 +41,7 @@ public final class SubcommandUtils {
      * @return Only specified normal arguments
      */
     public static List<String> getNormalArguments(List<Either<String, CommandFlag>> arguments) {
-        return arguments.stream().filter(Either::isLeft).map(Either::getLeft).toList();
+        return arguments.stream().filter(Either::isLeft).map(Either::getLeft).collect(Collectors.toList());
     }
 
     /**
@@ -49,7 +50,7 @@ public final class SubcommandUtils {
      * @return Only specified flags
      */
     public static List<CommandFlag> getFlags(List<Either<String, CommandFlag>> arguments) {
-        return arguments.stream().filter(Either::isRight).map(Either::get).toList();
+        return arguments.stream().filter(Either::isRight).map(Either::get).collect(Collectors.toList());
     }
 
     /**
@@ -62,7 +63,7 @@ public final class SubcommandUtils {
         return arguments
                 .stream()
                 .filter(flag -> flag.equals(simple))
-                .toList()
-                .getFirst();
+                .collect(Collectors.toList())
+                .get(0);
     }
 }

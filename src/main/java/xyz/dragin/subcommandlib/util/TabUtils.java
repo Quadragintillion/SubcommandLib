@@ -7,7 +7,9 @@ import xyz.dragin.subcommandlib.options.CommandFlag;
 import xyz.dragin.subcommandlib.options.CommandOption;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for tab completion
@@ -34,7 +36,7 @@ public final class TabUtils {
 
                 if (arg.startsWith("--")) {
                     for (CommandFlag allowedFlag : allowedFlags) {
-                        if (allowedFlag.toString().equals(arg)) flags = List.of(allowedFlag);
+                        if (allowedFlag.toString().equals(arg)) flags = Collections.singletonList(allowedFlag);
                     }
                 } else if (arg.startsWith("-")) {
                     for (char c : arg.substring(1).toCharArray()) {
@@ -43,16 +45,16 @@ public final class TabUtils {
                             if (allowedFlag.getFlag().equals("" + c)) matchingFlag = allowedFlag;
                         }
                         if (matchingFlag == null) {
-                            flags = List.of();
+                            flags = Collections.emptyList();
                             break;
                         } else flags.add(matchingFlag);
                     }
                 }
 
                 if (flags.isEmpty()) output.add(Either.left(arg));
-                else if (flags.size() == 1 && flags.getFirst() instanceof CommandOption option) {
-                    nextOption = option.clone();
-                } else output.addAll(flags.stream().map(Either::<String, CommandFlag>right).toList());
+                else if (flags.size() == 1 && flags.get(0) instanceof CommandOption) {
+                    nextOption = ((CommandOption)flags.get(0)).clone();
+                } else output.addAll(flags.stream().map(Either::<String, CommandFlag>right).collect(Collectors.toList()));
             }
         }
         if (nextOption != null) output.add(Either.right(nextOption));

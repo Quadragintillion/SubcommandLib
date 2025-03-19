@@ -10,9 +10,11 @@ SubcommandLib also has a powerful argument system. You can define CommandFlags, 
 
 ## Adding as a Dependency
 
-The current verison of SubcommandLib is 1.3.1.
+The current verison of SubcommandLib is 1.4.0.
 
 SubcommandLib uses the Either class from Vavr.
+
+SubcommandLib is not a plugin, only a library. You will need to [shade it](https://gradleup.com/shadow/).
 
 <details>
 <summary>Maven</summary>
@@ -122,12 +124,12 @@ public class ComplexSubcommand implements Subcommand {
                 player.sendMessage(ChatColor.YELLOW + "Someone ran a command on you!");
 
                 // --optional strikes them with lightning
-                if (flags.contains(new CommandFlag("optional") { @Override public List<Character> getSuggestedNext(List<CommandFlag> previous) { return List.of(); }})) {;
+                // CommandFlag.simple() gives you a dummy CommandFlag for comparison purposes
+                if (flags.contains(CommandFlag.simple("optional"))) {
                     player.getWorld().strikeLightning(player.getLocation());
                 }
 
                 // Check for -f and -r independently, although they can be typed together since they're one character and not CommandOptions
-                // CommandFlag.simple() gives you a dummy CommandFlag for comparison purposes
                 sender.sendMessage(flags.contains(CommandFlag.simple("f")) ? (ChatColor.GOLD + "flag -f specified") : (ChatColor.YELLOW + "flag -f not specified"));
                 sender.sendMessage(flags.contains(CommandFlag.simple("r")) ? (ChatColor.GOLD + "flag -r specified") : (ChatColor.YELLOW + "flag -r not specified"));
 

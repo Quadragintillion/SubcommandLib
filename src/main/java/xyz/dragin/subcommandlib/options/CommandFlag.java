@@ -1,5 +1,6 @@
 package xyz.dragin.subcommandlib.options;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public abstract class CommandFlag implements Cloneable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof CommandFlag other) return flag.equals(other.flag);
+        if (obj instanceof CommandFlag) return flag.equals(((CommandFlag)obj).flag);
         else return false;
     }
 
@@ -64,7 +65,7 @@ public abstract class CommandFlag implements Cloneable {
         return new CommandFlag(name) {
             @Override
             public List<Character> getSuggestedNext(List<CommandFlag> previous) {
-                return List.of();
+                return Collections.emptyList();
             }
         };
     }

@@ -3,6 +3,7 @@ package xyz.dragin.subcommandlib.options;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public abstract class CommandOption extends CommandFlag {
         this.option = option;
     }
 
-    public final List<Character> getSuggestedNext(List<CommandFlag> previous) { return List.of(); }
+    public final List<Character> getSuggestedNext(List<CommandFlag> previous) { return Collections.emptyList(); }
 
     @Override
     public CommandOption clone() {
@@ -65,7 +66,7 @@ public abstract class CommandOption extends CommandFlag {
         return new CommandOption(name) {
             @Override
             public @NotNull List<String> getSuggestedOptions() {
-                return List.of();
+                return Collections.emptyList();
             }
         };
     }
