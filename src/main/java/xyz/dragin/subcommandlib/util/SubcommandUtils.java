@@ -6,6 +6,7 @@ import xyz.dragin.subcommandlib.options.CommandFlag;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Utility class for Subcommands
@@ -20,7 +21,9 @@ public final class SubcommandUtils {
      * @return Whether the name exists as a child of the parent
      */
     public static boolean contains(Subcommand parent, String childName) {
-        return parent.getSubcommands().stream().map(Subcommand::getName).collect(Collectors.toList()).contains(childName);
+        return parent.getSubcommands().stream().flatMap(
+                (s) -> Stream.concat(Stream.of(s.getName()), s.getAliases().stream())
+        ).collect(Collectors.toList()).contains(childName);
     }
 
     /**
@@ -31,7 +34,7 @@ public final class SubcommandUtils {
      */
     public static Subcommand findSubcommandByName(Subcommand parent, String childName) {
         return parent.getSubcommands().stream().filter(
-                (subcommand) -> subcommand.getName().equals(childName)
+                (subcommand) -> subcommand.getName().equals(childName) || subcommand.getAliases().contains(childName)
         ).collect(Collectors.toList()).get(0);
     }
 

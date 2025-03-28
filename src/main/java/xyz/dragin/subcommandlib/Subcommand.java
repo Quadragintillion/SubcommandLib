@@ -14,9 +14,20 @@ import java.util.*;
 public interface Subcommand {
     /**
      * The all-lowercase name of the command for registry and identification; what's typed by the player.
+     * If registered as a base command, this is assumed to be in the commands section of your plugin.yml.
      * @return The name of the command
      */
     @NotNull String getName();
+
+    /**
+     * Aliases for the Subcommand to register alongside it (points to the same instance).
+     * If registered as a base command, this will be ignored; add any base aliases to the "aliases" property of your command in your plugin.yml.
+     * Default behavior: Returns an empty list.
+     * @return A list of alias names
+     */
+    @NotNull default List<String> getAliases() {
+        return Collections.emptyList();
+    }
 
     /**
      * A list of Subcommands that are children to this one.

@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Main class used for Subcommand registry
@@ -71,7 +72,9 @@ public final class SubcommandLib extends JavaPlugin {
             }
 
             // Initializes the output as all subcommand names
-            List<String> output = subcommand.getSubcommands().stream().map(Subcommand::getName).collect(Collectors.toList());
+            List<String> output = subcommand.getSubcommands().stream().flatMap(
+                    (s) -> Stream.concat(Stream.of(s.getName()), s.getAliases().stream())
+            ).map(Object::toString).collect(Collectors.toList());
 
             // Parsed version of the already given arguments
             List<Either<String, CommandFlag>> arguments = TabUtils.parseFlags(previouslySupplied, subcommand.getAllowedFlags(sender));
