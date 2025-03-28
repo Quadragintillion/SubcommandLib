@@ -114,6 +114,11 @@ public class ComplexSubcommand implements Subcommand {
     }
 
     @Override
+    public @NotNull List<String> getAliases() {
+        return List.of("alias");
+    }
+
+    @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull List<Either<String, CommandFlag>> arguments) {
         // Split the arguments into normal arguments in flags, because in this case the order doesn't matter
         List<String> args = SubcommandUtils.getNormalArguments(arguments);
@@ -122,16 +127,16 @@ public class ComplexSubcommand implements Subcommand {
         if (args.size() == 1) {
             Player player = Bukkit.getPlayerExact(args.getFirst());
             if (player != null) {
-                sender.sendMessage(ChatColor.GREEN + "Ran the command on " + args.getFirst() + "!");
+                sender.sendMessage(ChatColor.GREEN + "Ran subcommand1 on " + args.getFirst() + "!");
                 player.sendMessage(ChatColor.YELLOW + "Someone ran a command on you!");
 
                 // --optional strikes them with lightning
-                // CommandFlag.simple() gives you a dummy CommandFlag for comparison purposes
-                if (flags.contains(CommandFlag.simple("optional"))) {
+                if (flags.contains(new CommandFlag("optional") { @Override public List<Character> getSuggestedNext(List<CommandFlag> previous) { return List.of(); }})) {;
                     player.getWorld().strikeLightning(player.getLocation());
                 }
 
                 // Check for -f and -r independently, although they can be typed together since they're one character and not CommandOptions
+                // CommandFlag.simple() gives you a dummy CommandFlag for comparison purposes
                 sender.sendMessage(flags.contains(CommandFlag.simple("f")) ? (ChatColor.GOLD + "flag -f specified") : (ChatColor.YELLOW + "flag -f not specified"));
                 sender.sendMessage(flags.contains(CommandFlag.simple("r")) ? (ChatColor.GOLD + "flag -r specified") : (ChatColor.YELLOW + "flag -r not specified"));
 
