@@ -53,6 +53,7 @@ repositories {
 
 dependencies {
     implementation 'xyz.dragin:subcommandlib:VERSION'
+    implementation 'io.vavr:vavr:0.10.6'
 }
 ```
 </details>
@@ -66,6 +67,7 @@ repositories {
 
 dependencies {
     implementation("xyz.dragin:subcommandlib:VERSION")
+    implementation("io.vavr:vavr:0.10.6")
 }
 ```
 </details>
