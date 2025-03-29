@@ -31,7 +31,7 @@ public final class SubcommandLib extends JavaPlugin {
      * The name must match one given in plugin.yml for the command to appear in game.
      * If the Subcommand is also a Listener, events will automatically be registered.
      * @param command The Subcommand to register
-     * @param plugin  The JavaPlugin to register on the behalf of, usually "this"
+     * @param plugin The JavaPlugin to register on the behalf of, usually "this"
      */
     public static void register(@NotNull Subcommand command, @NotNull JavaPlugin plugin) {
         PluginCommand pluginCommand = plugin.getCommand(command.getName());
