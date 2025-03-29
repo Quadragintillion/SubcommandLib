@@ -7,10 +7,11 @@ In SubcommandLib, every command is a subcommand, including the base command (the
 SubcommandLib also has a powerful argument system. You can define CommandFlags, which are optional parameters that can change things about the command without replacing a normal argument. Flags start with either a `--` (longer names) or `-` (single characters). There are also CommandOptions, which take in an additional parameter, e.g. `--name MyName`. Single character CommandFlags (but NOT CommandOptions) can be grouped together, e.g. `-Syu`.
 
 [Link to documentation](https://dragin.xyz/javadoc/subcommandlib)
+[Support Discord](https://discord.dragin.xyz)
 
 ## Adding as a Dependency
 
-The current verison of SubcommandLib is 1.4.0.
+The current verison of SubcommandLib is 1.5.1.
 
 SubcommandLib uses the Either class from Vavr.
 
