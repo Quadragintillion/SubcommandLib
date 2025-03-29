@@ -1,8 +1,10 @@
 package xyz.dragin.subcommandlib;
 
 import io.vavr.control.Either;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import xyz.dragin.subcommandlib.options.CommandFlag;
@@ -25,8 +27,9 @@ public final class SubcommandLib extends JavaPlugin {
     }
 
     /**
-     * Registers your Subcommand for use in game based on its name. The name must match one given in plugin.yml for the command to appear in game.
-     *
+     * Registers your Subcommand for use in game based on its name.
+     * The name must match one given in plugin.yml for the command to appear in game.
+     * If the Subcommand is also a Listener, events will automatically be registered.
      * @param command The Subcommand to register
      * @param plugin  The JavaPlugin to register on the behalf of, usually "this"
      */
@@ -36,6 +39,8 @@ public final class SubcommandLib extends JavaPlugin {
 
         pluginCommand.setExecutor(wrapper);
         pluginCommand.setTabCompleter(wrapper);
+
+        if (command instanceof Listener) Bukkit.getPluginManager().registerEvents((Listener) command, plugin);
     }
 
     private static class SubcommandWrapper implements CommandExecutor, TabCompleter {
