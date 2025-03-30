@@ -1,6 +1,9 @@
 # SubcommandLib
 A nice library for custom Spigot commands, subcommands and tab completion
 
+## SubcommandLib will likely no longer be updated
+I created SubcommandLib for myself because I thought there wasn't a good library for commands. However, I recently found that [CommandAPI](https://www.spigotmc.org/resources/api-commandapi-1-16-5-1-21-4.62353/) has a far better system, including things like built-in error checking. I may later create a fork or extension of CommandAPI that contains Bash command-line features like SubcommandLib's optional CommandFlags and spaced arguments using quotations (e.g. "this is one argument"). However, as of now, I see no reason to continue developing this.
+
 ## About/Logic
 In SubcommandLib, every command is a subcommand, including the base command (the part with the /). All these subcommands can have any amount of subcommand "children." This creates a sort of tree of subcommands, which is great for organization. Any subcommand can be registered as a base command using `SubcommandLib.register()`.
 
